@@ -96,18 +96,19 @@ tbodies = WebDriverWait(driver, 10).until(
     EC.presence_of_all_elements_located((By.XPATH, "//tbody"))
 )
 
-for key in crns:
-    try:
-        tbody = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located(
-                (By.XPATH, f"//tbody[contains(., '{key}') and contains(., 'Sections')]")
+while True:
+    for key in crns:
+        try:
+            tbody = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located(
+                    (By.XPATH, f"//tbody[contains(., '{key}') and contains(., 'Sections')]")
+                )
             )
-        )
-        WebDriverWait(tbody, 10).until(
-            EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, "Sections"))
-        ).click()
-        check_for_updates()
-        driver.back()
-        sleep(5)
-    except Exception as e:
-        print("error:", e)
+            WebDriverWait(tbody, 10).until(
+                EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, "Sections"))
+            ).click()
+            check_for_updates()
+            driver.back()
+            sleep(5)
+        except Exception as e:
+            print("error:", e)
