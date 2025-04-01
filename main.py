@@ -15,7 +15,9 @@ load_dotenv("credentials.env")
 email = os.getenv("EMAIL")
 password = os.getenv("PASSWORD")
 
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+op = webdriver.ChromeOptions()
+# op.add_argument("headless")
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=op)
 driver.get(
     "https://tamu.collegescheduler.com/terms/Spring%202025%20-%20College%20Station/courses/5246404"
 )
@@ -56,7 +58,6 @@ WebDriverWait(driver, 10).until(
 ).click()
 
 crns = {"POLS 207": ["33048", "45758"], "VIST 386": ["59721"]}
-
 
 def send_notif(class_name, crn, seats_open):
     notification.notify(
