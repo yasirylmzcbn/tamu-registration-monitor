@@ -71,7 +71,7 @@ def check_for_updates():
         EC.presence_of_element_located((By.XPATH, "//h1"))
     )
     class_name = title.text[0:5] + title.text[-3:]
-    while True:
+    for _ in range(6):
         try:
             table = WebDriverWait(driver, 10).until(
                 EC.presence_of_element_located((By.XPATH, "//table"))
@@ -87,7 +87,7 @@ def check_for_updates():
                     send_notif(class_name, crn, seats)
         except Exception as e:
             print("error:", e)
-        sleep(15)
+        sleep(10)
         driver.refresh()
 
 
@@ -95,21 +95,19 @@ sleep(5)
 tbodies = WebDriverWait(driver, 10).until(
     EC.presence_of_all_elements_located((By.XPATH, "//tbody"))
 )
-real_tbodies = []
-for tbody in tbodies:
-    try:
-        for key in crns:
-            if key in tbody.text and "Sections" in tbody.text:
-                real_tbodies.append(tbody)
-    except Exception as e:
-        print("error:", e)
 
-for tbody in real_tbodies:
+for key in crns:
     try:
+        tbody = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(
+                (By.XPATH, f"//tbody[contains(., '{key}') and contains(., 'Sections')]")
+            )
+        )
         WebDriverWait(tbody, 10).until(
             EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, "Sections"))
         ).click()
         check_for_updates()
+        driver.back()
+        sleep(5)
     except Exception as e:
         print("error:", e)
-    input()
