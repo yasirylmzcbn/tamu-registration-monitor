@@ -24,11 +24,10 @@ pip install -r requirements.txt
 EMAIL=<your_netid_email>
 PASSWORD=<your_netid_password>
 ```
-7. Edit the crns dictionary in `main.py` to list the courses and specific section CRNs you want to monitor. Example:
+7. Edit the crns dictionary in `main.py` to list the courses and specific section CRNs you want to monitor. It would be easier if I made a UI to select the CRNS but I'm too lazy. Example:
 ```python
 crns = {"POLS 207": ["33048", "45758"], "VIST 386": ["59721"]}
 ```
-It would be easier if I made a UI to select the CRNS but I'm too lazy.
 8. Run the script
 ```bash
 python main.py
